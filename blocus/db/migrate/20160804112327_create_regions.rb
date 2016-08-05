@@ -3,7 +3,7 @@ class CreateRegions < ActiveRecord::Migration[5.0]
     create_table :regions do |t|
 
       t.integer :region_id
-      t.string :name
+      t.string :name, default: "nowhere"
       t.timestamps
     end
   end

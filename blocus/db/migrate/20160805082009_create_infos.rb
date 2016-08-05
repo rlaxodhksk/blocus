@@ -3,8 +3,8 @@ class CreateInfos < ActiveRecord::Migration[5.0]
     create_table :infos do |t|
 
       t.integer :blok_id
-      t.string :title
-      t.text :content
+      t.string :title, default: ""
+      t.text :content, default: ""
       t.timestamps
     end
   end

@@ -1,19 +1,20 @@
-<%= @region.name %>
+<h1> <%= @region.name %>로 떠납니다.</h1>
 <%= link_to "수정하기", edit_region_path(@region) %>
 <%= link_to "삭제하기", region_path(@region), method: 'delete' %>
 <%= link_to "전체보기", regions_path %>
 
 <% @region.bloks.each do |r| %>
-  </br>
-  <%= r.lat %>,  <%= r.lng%>
-
+  </br></br>
   <a class="modal-trigger waves-effect waves-light btn" href="#modal<%=r.id%>">info</a>
-
+  <%= r.lat %>,  <%= r.lng%>
   <!-- Modal Structure -->
   <div id="modal<%=r.id%>" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <h4><%=Info.find(r.id).title%></h4>
-      <p><%=Info.find(r.id).content%></p>
+      <h4>제목 : <%=Info.find(r.id).title%></h4>
+      <p>내용 : <%=Info.find(r.id).content%></p></br>
+      <p>타입 : <%=Event.find(r.id).kind%></p></br>
+      <p>이벤트 기간 : <%=Event.find(r.id).start%> ~ <%=Event.find(r.id).end%></p></br>
+
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
@@ -28,6 +29,6 @@
     });
   </script>
 <% end %>
-</br>
+</br></br></br>
 <%= link_to "만들기", new_blok_path %>
 

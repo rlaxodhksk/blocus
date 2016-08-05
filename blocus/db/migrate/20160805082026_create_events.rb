@@ -2,10 +2,10 @@ class CreateEvents < ActiveRecord::Migration[5.0]
   def change
     create_table :events do |t|
 
-      t.string :type
+      t.string :kind
       t.integer :duration
-      t.integer :start
-      t.integer :end
+      t.string :start
+      t.string :end
       t.integer :blok_id
       t.timestamps
     end

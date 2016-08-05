@@ -4,7 +4,7 @@ class CreateComments < ActiveRecord::Migration[5.0]
 
       t.integer :user_id
       t.integer :info_id
-      t.text :content
+      t.text :content, default: ""
       t.timestamps
     end
   end

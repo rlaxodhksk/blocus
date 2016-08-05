@@ -13,9 +13,11 @@
 ActiveRecord::Schema.define(version: 20160805082409) do
 
   create_table "accounts", force: :cascade do |t|
+    t.integer  "point",      default: 0
+    t.integer  "cash",       default: 0
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "bloks", force: :cascade do |t|
@@ -32,16 +34,16 @@ ActiveRecord::Schema.define(version: 20160805082409) do
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "info_id"
-    t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "content",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "events", force: :cascade do |t|
-    t.string   "type"
+    t.string   "kind"
     t.integer  "duration"
-    t.integer  "start"
-    t.integer  "end"
+    t.string   "start"
+    t.string   "end"
     t.integer  "blok_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -49,17 +51,17 @@ ActiveRecord::Schema.define(version: 20160805082409) do
 
   create_table "infos", force: :cascade do |t|
     t.integer  "blok_id"
-    t.string   "title"
-    t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "title",      default: ""
+    t.text     "content",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "regions", force: :cascade do |t|
     t.integer  "region_id"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       default: "nowhere"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "users", force: :cascade do |t|
