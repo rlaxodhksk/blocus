@@ -1,17 +1,5 @@
-<html>
-<head></head>
-  <body>
-
-
-      <%=@region.name%>
-      <%@region.bloks.each do |blok| %>
-         <form action="/">
-            <button type="submit button" class="btn btn-default btn-lg">
-                  <p> <%= blok.lat%>, <%=blok.lng %>, <%=User.find(blok.user_id)%> </p>
-
-            </button></form>
-            </br>
-     <% end %>
-
-  </body>
-</html>
+<% @regions.each do |r| %>
+  <%= r.name %>
+  <%= link_to "자세하기", region_path(r)%>
+<% end %>
+<%= link_to "만들기", new_region_path %>

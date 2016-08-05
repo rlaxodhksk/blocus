@@ -1,15 +1,8 @@
-<html>
-  <head></head>
-  <body>
+<% @region.each do |reg| %>
+  <form action="/regions/<%=reg.region_id%>/index" method="get">
+    <button type="submit button" class="btn btn-default btn-lg">
+      <%=reg.name%>
+  </button></form>
 
-    <% @region.each do |reg| %>
-      <form action="/regions/<%=reg.region_id%>/index" method="get">
-        <button type="submit button" class="btn btn-default btn-lg">
-          <%=reg.name%>
-      </button></form>
-
-      </br>
-    <% end %>
-
-  </body>
-</html>
+  </br>
+<% end %>
