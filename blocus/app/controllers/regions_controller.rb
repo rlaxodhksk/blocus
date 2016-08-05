@@ -1,5 +1,4 @@
 class RegionsController < ApplicationController
-
   def index
     @regions=Region.all
   end
@@ -10,7 +9,6 @@ class RegionsController < ApplicationController
 
   def create
     @region = Region.create(region_params)
-    
     redirect_to regions_path
   end
 
@@ -34,7 +32,6 @@ class RegionsController < ApplicationController
     @region.destroy
     redirect_to regions_path
   end
-  
   private
   def region_params
     params.require(:region).permit(:name)
