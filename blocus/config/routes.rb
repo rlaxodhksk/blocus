@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  root 'homes#index'
+  resources :comments
+  resources :events
+  resources :infos
+  root 'regions#index'
 
   get '/regions/:region_id/index' => "regions#index"
 
 
-  resources :homes
   resources :regions
   resources :bloks
   devise_for :users

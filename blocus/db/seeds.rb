@@ -16,10 +16,10 @@ User.create email: 'admin4@a', password: "123456"
 
 
 
-Region.create name: '홍대', region_id: 1
-Region.create name: '강남', region_id: 2
-Region.create name: '이태원', region_id: 3
-Region.create name: '명동', region_id: 4
+Region.create name: '홍대'
+Region.create name: '강남'
+Region.create name: '이태원'
+Region.create name: '명동'
 Region.create name: '인사동'
 Region.create name: '관악'
 Region.create name: '서초'
@@ -41,6 +41,17 @@ Blok.create lat: 22.8, lng: 25.32, region_id: 5, user_id: 1
 
 
 
+
+Info.create title: "테스트 제목이다", content: "테스트 내용"
+
+Info.create title: "테스트 제목이다", content: "테스트 내용"
+
+Info.create title: "테스트 제목이다", content: "테스트 내용"
+
+Info.create title: "테스트 제목이다", content: "테스트 내용"
+
+Info.create title: "테스트 제목이다", content: "테스트 내용"
+Info.create title: "테스트 제목이다", content: "테스트 내용"
 
 
 

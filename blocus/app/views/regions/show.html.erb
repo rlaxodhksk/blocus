@@ -2,3 +2,32 @@
 <%= link_to "수정하기", edit_region_path(@region) %>
 <%= link_to "삭제하기", region_path(@region), method: 'delete' %>
 <%= link_to "전체보기", regions_path %>
+
+<% @region.bloks.each do |r| %>
+  </br>
+  <%= r.lat %>,  <%= r.lng%>
+
+  <a class="modal-trigger waves-effect waves-light btn" href="#modal<%=r.id%>">info</a>
+
+  <!-- Modal Structure -->
+  <div id="modal<%=r.id%>" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4><%=Info.find(r.id).title%></h4>
+      <p><%=Info.find(r.id).content%></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+    </div>
+  </div>
+
+
+  <script>
+    $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+    });
+  </script>
+<% end %>
+</br>
+<%= link_to "만들기", new_blok_path %>
+

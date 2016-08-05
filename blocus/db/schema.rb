@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804124858) do
+ActiveRecord::Schema.define(version: 20160805082409) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "bloks", force: :cascade do |t|
+    t.integer  "info_id"
+    t.integer  "event_id"
     t.integer  "user_id"
     t.integer  "region_id"
     t.float    "lat"
@@ -21,8 +29,28 @@ ActiveRecord::Schema.define(version: 20160804124858) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "homes", force: :cascade do |t|
-    t.string   "index"
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "info_id"
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string   "type"
+    t.integer  "duration"
+    t.integer  "start"
+    t.integer  "end"
+    t.integer  "blok_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "infos", force: :cascade do |t|
+    t.integer  "blok_id"
+    t.string   "title"
+    t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

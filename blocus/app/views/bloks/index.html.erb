@@ -1,9 +1,7 @@
-    <% @region.each do |reg| %>
-      <%=reg.name%>
-      <%reg.bloks.each do |blok| %>
-       <p> <%= blok.lag%>, <%=blok.lng %>, <%=blok.user_id%> </p>
-       </br>
-     <% end %>
-     </br>
-     </br>
-    <% end %>
+<% @bloks.each do |r| %>
+  </br>
+  <%= r.lat %>,  <%= r.lng%>
+<% end %>
+</br>
+<%= link_to "만들기", new_blok_path %>
+
