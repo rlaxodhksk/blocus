@@ -1,0 +1,17 @@
+<html>
+<head></head>
+  <body>
+
+
+      <%=@region.name%>
+      <%@region.bloks.each do |blok| %>
+         <form action="/">
+            <button type="submit button" class="btn btn-default btn-lg">
+                  <p> <%= blok.lat%>, <%=blok.lng %>, <%=User.find(blok.user_id)%> </p>
+
+            </button></form>
+            </br>
+     <% end %>
+
+  </body>
+</html>

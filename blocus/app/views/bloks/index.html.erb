@@ -1,0 +1,16 @@
+<html>
+<head></head>
+  <body>
+
+    <% @region.each do |reg| %>
+      <%=reg.name%>
+      <%reg.bloks.each do |blok| %>
+       <p> <%= blok.lag%>, <%=blok.lng %>, <%=blok.user_id%> </p>
+       </br>
+     <% end %>
+     </br>
+     </br>
+    <% end %>
+
+  </body>
+</html>
