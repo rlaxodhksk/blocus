@@ -7,7 +7,7 @@
       <%@region.bloks.each do |blok| %>
          <form action="/">
             <button type="submit button" class="btn btn-default btn-lg">
-                  <p> <%= blok.lat%>, <%=blok.lng %>, <%=User.find(blok.user_id)%> </p>
+              <p> <%= blok.lat%>, <%=blok.lng %>, <%=User.find(blok.user_id).email%> </p>
 
             </button></form>
             </br>

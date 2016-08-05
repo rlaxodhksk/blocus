@@ -7,10 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-User.create(email: 'admin1@naver.com')
-User.create(email: 'admin2@naver.com')
-User.create(email: 'admin3@naver.com')
-User.create email: 'admin4@naver.com'
+User.create email: 'admin1@a', password: "123456"
+User.create email: 'admin2@a', password: "123456"
+User.create email: 'admin3@a', password: "123456"
+User.create email: 'admin4@a', password: "123456"
 
 
 
