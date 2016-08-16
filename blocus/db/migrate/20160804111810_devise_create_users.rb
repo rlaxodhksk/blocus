@@ -2,8 +2,10 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
   def change
     create_table :users do |t|
 
-      ## customize
+      ## customized
       t.string :name
+      t.integer :cash, default: 0
+      t.integer :point, default: 0
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""

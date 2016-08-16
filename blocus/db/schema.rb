@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(version: 20160805082409) do
     t.integer  "region_id"
     t.float    "lat"
     t.float    "lng"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "flag",       default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -40,13 +41,14 @@ ActiveRecord::Schema.define(version: 20160805082409) do
   end
 
   create_table "events", force: :cascade do |t|
+    t.integer  "score",      default: 0
     t.string   "kind"
     t.integer  "duration"
     t.string   "start"
     t.string   "end"
-    t.integer  "blok_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "blok_id",    default: 1
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "infos", force: :cascade do |t|
@@ -66,6 +68,8 @@ ActiveRecord::Schema.define(version: 20160805082409) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
+    t.integer  "cash",                   default: 0
+    t.integer  "point",                  default: 0
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"

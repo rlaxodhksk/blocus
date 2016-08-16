@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
+  get 'home/mypage' => "home#mypage"
+  get 'home/list' => "home#list"
+
   resources :comments
   resources :events
   resources :infos
   root 'regions#index'
 
   get '/regions/:region_id/index' => "regions#index"
-
+  get '/mypage' => "home#mypage"
 
   resources :regions
   resources :bloks

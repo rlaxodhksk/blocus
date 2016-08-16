@@ -6,6 +6,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="/maps/documentation/javascript/demos/demos.css">
   </head>
 
   <body>
@@ -13,7 +14,7 @@
     <div class="nav-wrapper">
       <a href="/" class="brand-logo">Blocus</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">마이 페이지</a></li>
+        <li><a href="/mypage">마이 페이지</a></li>
         <li><a href="badges.html">temp1</a></li>
         <li><a href="collapsible.html">temp2</a></li>
         <% if user_signed_in? %>
@@ -27,9 +28,7 @@
 </nav>
 <main>
 
-<div class="container">
   <%= yield %>
-</div>
 </main>
 <footer class="page-footer">
 <div class="container">
@@ -47,5 +46,4 @@
   </div>
 </div>
 </footer>
-  </body>
-</html>
+

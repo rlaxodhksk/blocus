@@ -1,0 +1,10 @@
+
+
+<h1>계좌 정보</h1>
+
+cash : <%=@user.cash %> </br>
+point : <%=@user.point %> </br>
+
+<% @user.bloks.each do |blok| %>
+  <%=blok.lat%> <%= blok.lng%> </br>
+<% end %>

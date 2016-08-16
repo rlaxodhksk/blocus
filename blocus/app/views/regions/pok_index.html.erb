@@ -1,0 +1,86 @@
+<h1 class="pokemon">속초 마을 포켓몬 출몰 지도</h1>
+<div id="map">
+</div>
+<table>
+  <thead>
+    <tr>
+      <th data-field="id">Name</th>
+      <th><p onclick='initialize();'> 초기화</p></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @index = 0 %>
+    <% Pokemon.all.each do |p| %>
+      <% if @index%3 == 0  %>
+        <tr>
+        <% end %>
+        <td onclick="pokemon_init(<%= p.lat %>,<%= p.lng %>,'<%= p.img %>');">
+          <%= p.name %>
+        </td>
+        <% if @index%3 == 2 %>
+        </tr>
+      <% end %>
+      <% @index+=1 %>
+    <% end %>
+  </tbody>
+</table>
+<%= render partial: 'pokemon_list'%>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5S9GCmBfDhBI3Ha9JkYdEXzHS7Fyl_hE&callback=initMap&libraries=drawing">
+</script>
+
+<script>
+  var map;
+  function initMap() {
+    var customMapType = new google.maps.StyledMapType([{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#a1f199"}]},
+    {
+      elementType: 'labels',
+      stylers: [{visibility: 'off'}]
+      },{"featureType":"landscape.natural.landcover","elementType":"geometry.fill","stylers":[{"color":"#37bda2"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.fill","stylers":[{"color":"#37bda2"}]},{"featureType":"poi.attraction","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"poi.business","elementType":"geometry.fill","stylers":[{"color":"#e4dfd9"}]},{"featureType":"poi.business","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#37bda2"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#84b09e"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#fafeb8"},{"weight":"1.25"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#5ddad6"}]}], {
+      name: 'Custom Style'
+    });
+    var customMapTypeId = 'custom_style';
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: {lat: 38.204784, lng: 128.569288 },  // Brooklyn.
+      mapTypeControlOptions: {
+        mapTypeIds: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
+      }
+    });
+
+    map.mapTypes.set(customMapTypeId, customMapType);
+    map.setMapTypeId(customMapTypeId);
+
+  }
+  function pokemon_init(lat,lng,img){
+    var pos = {lat: lat, lng: lng};
+    var image = {
+            url: img,
+            scaledSize: new google.maps.Size(70,70),
+            origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (0, 32).
+            anchor: new google.maps.Point(0, 0)
+    };
+    var pokemonMarker = new google.maps.Marker({
+     icon: image,
+     map:map,
+     position: pos
+   });
+   var pokemonCircle = new google.maps.Circle({
+     strokeColor: '#FF0000',
+     strokeOpacity: 0.8,
+     strokeWeight: 2,
+     fillColor: '#FF0000',
+     fillOpacity: 0.35,
+     map: map,
+     center: pos,
+     radius: 150
+   });
+ }
+ function initialize(){
+   initMap();
+ }
+</script>

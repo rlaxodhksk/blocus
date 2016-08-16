@@ -10,6 +10,8 @@ class CreateBloks < ActiveRecord::Migration[5.0]
       t.float :lat
       t.float :lng
 
+      t.integer :flag, default: 0
+
       t.timestamps
     end
   end

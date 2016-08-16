@@ -28,7 +28,7 @@ Region.create name: '건대'
 
 
 
-Blok.create lat: 27.8, lng: 54.3, region_id: 1, user_id: 1
+Blok.create lat: 27.8, lng: 54.3, region_id: 1, user_id: 1, flag: 1
 Blok.create lat: 23.8, lng: 53.3, region_id: 1, user_id: 2
 Blok.create lat: 32.8, lng: 52, region_id: 2, user_id: 1
 Blok.create lat: 53.8, lng: 25.32, region_id: 3, user_id: 1
@@ -91,12 +91,12 @@ Info.create title: "테스트 제목이다", content: "테스트 내용"
 Info.create title: "테스트 제목이다", content: "테스트 내용"
 Info.create title: "테스트 제목이다", content: "테스트 내용"
 
-Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07"
-Event.create kind: "축제", start: "2016/09/21", end: "2016/09/22"
-Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07"
-Event.create kind: "축제", start: "2016/09/21", end: "2016/09/22"
-Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07"
-Event.create kind: "축제", start: "2016/09/21", end: "2016/09/22"
+Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07", score: 1
+Event.create kind: "축제", start: "2016/09/21", end: "2016/09/22", score: 2
+Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07", score: 3
+Event.create kind: "축제", start: "2016/09/21", end: "2016/09/22", score: 4
+Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07", score: 10
+Event.create kind: "축제", start: "2016/09/21", end: "2016/09/22", score: 21
 Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07"
 Event.create kind: "축제", start: "2016/09/21", end: "2016/09/22"
 Event.create kind: '공연', start: "2016/08/02", end: "2016/08/07"
