@@ -4,72 +4,47 @@
 
 
 <script>
-  function initMap() {
-  // Create a map object and specify the DOM element for display.
-  var map = new google.maps.Map(document.getElementById('map'), {
-  center: {lat: 37.551700, lng: 126.919274},
-  scrollwheel: false,
-  zoom: 15
-  });
-  map.addListener('click', function(e) {
-  var rectangle = new google.maps.Rectangle({
-  strokeColor: '#F5A9E1',
-  strokeOpacity: 0.8,
-  strokeWeight: 1,
-  fillColor: '#FFFFFF',
-  fillOpacity: 0.0,
-  map: map,
-  bounds: {
-  north: Math.floor(e.latLng.lat()/0.00027)*0.00027,
-  south: Math.floor(e.latLng.lat()/0.00027+1)*0.00027,
-  east: Math.floor(e.latLng.lng()/0.00034)*0.00034,
-  west: Math.floor(e.latLng.lng()/0.00034-1)*0.00034
-  }
+    function initMap() {
+      // Create a map object and specify the DOM element for display.
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 37.551700, lng: 126.919274},
+        scrollwheel: false,
+        zoom: 18
+      });
+      map.addListener('mousemove', function(e) {
+        var infowindow = new google.maps.InfoWindow();
+        var rectangle = new google.maps.Rectangle({
+          strokeColor: '#eeeeee',
+          strokeOpacity: 0.8,
+          strokeWeight: 1,
+          fillColor: 'black',
+          fillOpacity: 0.5,
+          map: map,
+          bounds: {
+            north: Math.floor(e.latLng.lat()/0.00027)*0.00027,
+            south: Math.floor(e.latLng.lat()/0.00027+1)*0.00027,
+            east: Math.floor(e.latLng.lng()/0.00034+1)*0.00034,
+            west: Math.floor(e.latLng.lng()/0.00034)*0.00034
+        }});
+        this.addListener('mousemove', function() {
+          rectangle.setMap();
+          infowindow.close();
+        });
+        rectangle.addListener('click', function() {
+          rectangle.setOptions({ fillColor: 'red'});
+          var ne = rectangle.getBounds().getNorthEast();
+          var nw = new google.maps.LatLng(ne.lat()+0.000135,ne.lng()-0.00017);
+          infowindow.setContent('<%= escape_javascript(render partial: 'infowindows', locals: { :blok => @blok }) %>');
+          infowindow.setPosition(nw);
+          infowindow.open(map);
+        });
 
-  });
-  });
+      });
+    }
+  </script>
+  <script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap&libraries=geometry'
+    async defer></script>
 
-  for(i=0; i<50; i++) {
-  for(j=0; j<50; j++) {
-  var flag = 0;
-  var infowindow = new google.maps.InfoWindow();
-  var rectangle = new google.maps.Rectangle({
-  strokeColor: '#F5A9E1',
-  strokeOpacity: 0.8,
-  strokeWeight: 1,
-  fillColor: '#FFFFFF',
-  fillOpacity: 0.0,
-  map: map,
-  bounds: {
-  north: 37.544432+i*0.000027*10,
-  south: 37.544432+(i+1)*0.000027*10,
-  east: 126.909725+(j+1)*0.000034*10,
-  west: 126.909725+j*0.000034*10
-  }
-
-
-  });
-  rectangle.addListener('click',function(){
-  this.setOptions({fillColor: 'red', fillOpacity: 0.5});
-   var ne = rectangle.getBounds().getNorthEast();
-   infowindow.setContent("Hello, World!");
-   infowindow.setPosition(ne);
-   infowindow.open(map);
-  });
-  rectangle.addListener('mouseover',function(){
-  this.setOptions({fillColor: 'green', fillOpacity: 0.5});
-  });
-  rectangle.addListener('mouseout',function(){
-  this.setOptions({ fillOpacity: 0.0});
-  });
-
-  }
-  }
-
-  }
-</script>
-<script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap&libraries=geometry'
-  async defer></script>
 
 
 
@@ -80,8 +55,6 @@
 <%= link_to "수정하기", edit_region_path(@region) %>
 <%= link_to "삭제하기", region_path(@region), method: 'delete' %>
 <%= link_to "전체보기", regions_path %>
-<div id="map" style="width:1200px; height:500px"></div>
-
 
 
 

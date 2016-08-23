@@ -8,8 +8,19 @@ class BloksController < ApplicationController
   end
 
   def create
-    @blok = Blok.create(blok_params)
-    redirect_to bloks_path
+    @block = Blok.new(block_params)
+    @blok.user = current_user
+
+    respond_to do |format|
+      if @block.save
+        flash[:notice] = 'Blok was successfully created.'
+        format.html { redirect_to(@block) }
+        format.xml  { render xml: @block, status: :created, location: @block }
+      else
+        format.html { render action: 'new' }
+        format.xml  { render xml: @block.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def show
@@ -34,6 +45,6 @@ class BloksController < ApplicationController
   end
   private
   def blok_params
-    params.require(:blok).permit(:lat, :lng, :user_id, :region_id)
+    params.require(:blok).permit(:lat, :lng, :region_id)
   end
 end
