@@ -37,6 +37,26 @@
 
     });
     });
+
+
+ map.addListener('mouseover', function(e) {
+  var rect = new google.maps.Rectangle({
+    strokeColor: '#F5A9E1',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: 'black',
+    fillOpacity: 0.5,
+    map: map,
+    bounds: {
+    north: Math.floor(e.latLng.lat()/0.00027)*0.00027,
+    south: Math.floor(e.latLng.lat()/0.00027+1)*0.00027,
+    east: Math.floor(e.latLng.lng()/0.00034+1)*0.00034,
+    west: Math.floor(e.latLng.lng()/0.00034)*0.00034
+    }});
+    });
+
+
+
     }
   </script>
 <script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap'
