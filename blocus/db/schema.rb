@@ -21,15 +21,12 @@ ActiveRecord::Schema.define(version: 20160805082409) do
   end
 
   create_table "bloks", force: :cascade do |t|
-    t.integer  "info_id"
-    t.integer  "event_id"
     t.integer  "user_id"
     t.integer  "region_id"
     t.float    "lat"
     t.float    "lng"
-    t.integer  "flag",       default: 0
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -51,6 +48,12 @@ ActiveRecord::Schema.define(version: 20160805082409) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "homes", force: :cascade do |t|
+    t.string   "index"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "infos", force: :cascade do |t|
     t.integer  "blok_id"
     t.string   "title",      default: ""
@@ -61,15 +64,12 @@ ActiveRecord::Schema.define(version: 20160805082409) do
 
   create_table "regions", force: :cascade do |t|
     t.integer  "region_id"
-    t.string   "name",       default: "nowhere"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "cash",                   default: 0
-    t.integer  "point",                  default: 0
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
