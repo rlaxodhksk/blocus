@@ -1,14 +1,24 @@
 class BloksController < ApplicationController
   def index
-    @bloks=Blok.all
+    @blok = Blok.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render xml: @bloks }
+    end
   end
 
   def new
     @blok = Blok.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render xml: @blok }
+    end
   end
 
   def create
-    @blok = Blok.new()
+    @blok = Blok.new(blok_params)
     @blok.user = current_user
 
     respond_to do |format|
@@ -25,26 +35,29 @@ class BloksController < ApplicationController
 
   def show
     @blok = Blok.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render xml: @blok }
+    end
   end
 
   def edit
     @blok = Blok.find(params[:id])
   end
 
-  def update
-    @blok = Blok.find(params[:id])
-    @blok.update(blok_params)
-
-    redirect_to blok_path(@blok)
-  end
-
   def destroy
     @blok = Blok.find(params[:id])
     @blok.destroy
-    redirect_to bloks_path
+
+    respond_to do |format|
+      format.html { redirect_to(bloks_url) }
+      format.xml  { head :ok }
+    end
   end
+
   private
   def blok_params
-    params.require(:blok).permit(:lat, :lng, :region_id)
+    params.require(:blok).permit(:lat, :lng)
   end
 end

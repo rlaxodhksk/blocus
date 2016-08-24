@@ -1,4 +1,5 @@
 class RegionsController < ApplicationController
+  skip_before_action :authenticate_user!
   def index
     @regions=Region.all
   end
@@ -13,6 +14,7 @@ class RegionsController < ApplicationController
   end
 
   def show
+    @bloks = Blok.all
     @blok = Blok.new
     @region = Region.find(params[:id])
   end
