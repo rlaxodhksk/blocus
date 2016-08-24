@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8" id="map" style=height:550px;"></div>
-  <div class="col-md-4" id="sns"><%=Info.find(1)%></div>
+  <div class="col-md-4" id="sns"><%=Info.find(1).content%></div>
 </div>
 
 
@@ -14,24 +14,88 @@
   scrollwheel: false,
   zoom: 15
   });
-
+//// Zoom change ////
+  google.maps.event.addListener(map, 'zoom_changed', function() {
   <% Blok.all.each do |b| %>
-  var rectangle = new google.maps.Rectangle({
-  strokeColor: 'green',
-  strokeOpacity: 0.8,
-  strokeWeight: 1,
-  fillColor: 'green',
-  fillOpacity: 0.5,
-  map: map,
-  bounds: {
-  north: Math.floor('<%=b.lat%>'/0.00027)*0.00027,
-  south: Math.floor('<%=b.lat%>'/0.00027+1)*0.00027,
-  east: Math.floor('<%=b.lng%>'/0.00034+1)*0.00034,
-  west: Math.floor('<%=b.lng%>'/0.00034)*0.00034
-  }});
- rectangle.addListener('click', function() {
- $('#sns').html('<%= Info.find(b.id).content.to_json%>');
- })
+    var flag = 1
+    rectangle['<%=b.id%>'].setMap();
+    if(map.getZoom() <=13) {
+    <% if Info.find(b.id).popularity <= 30 %>
+      flag = 0
+    <% end %>
+    }
+    if(map.getZoom() ==14) {
+    <% if Info.find(b.id).popularity <= 20 %>
+      flag = 0
+    <% end %>
+    }
+    if(map.getZoom() ==15) {
+    <% if Info.find(b.id).popularity <= 10 %>
+      flag = 0
+    <% end %>
+    }
+    if(map.getZoom() >=16) {
+    <% if Info.find(b.id).popularity <= 5 %>
+      flag = 0
+    <% end %>
+    }
+
+    if(flag) {
+    rectangle['<%=b.id%>'] = new google.maps.Rectangle({
+    strokeColor: 'green',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: 'green',
+    fillOpacity: 0.5,
+    map: map,
+    bounds: {
+    north: Math.floor('<%=b.lat%>'/0.00027)*0.00027,
+    south: Math.floor('<%=b.lat%>'/0.00027+1)*0.00027,
+    east: Math.floor('<%=b.lng%>'/0.00034+1)*0.00034,
+    west: Math.floor('<%=b.lng%>'/0.00034)*0.00034
+    }});
+    rectangle['<%=b.id%>'].addListener('click', function() {
+
+    <% Blok.all.each do |c| %>
+      rectangle['<%=c.id%>'].setOptions({fillColor: 'green'});
+    <% end %>
+
+    rectangle['<%=b.id%>'].setOptions({fillColor: 'blue'});
+
+
+    $('#sns').html('<%= Info.find(b.id).content.to_json%>');
+    })
+    }
+  <% end %>
+
+  });
+//////////////////////
+  var rectangle = []
+  <% Blok.all.each do |b| %>
+    rectangle['<%=b.id%>'] = new google.maps.Rectangle({
+    strokeColor: 'green',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: 'green',
+    fillOpacity: 0.5,
+    map: map,
+    bounds: {
+    north: Math.floor('<%=b.lat%>'/0.00027)*0.00027,
+    south: Math.floor('<%=b.lat%>'/0.00027+1)*0.00027,
+    east: Math.floor('<%=b.lng%>'/0.00034+1)*0.00034,
+    west: Math.floor('<%=b.lng%>'/0.00034)*0.00034
+    }});
+    rectangle['<%=b.id%>'].addListener('click', function() {
+
+   <% Blok.all.each do |c| %>
+     rectangle['<%=c.id%>'].setOptions({fillColor: 'green'});
+   <% end %>
+
+    rectangle['<%=b.id%>'].setOptions({fillColor: 'blue'});
+
+
+   $('#sns').html('<%= Info.find(b.id).content.to_json%>');
+   })
 <% end %>
   map.addListener('mousemove', function(e) {
   var infowindow = new google.maps.InfoWindow();
