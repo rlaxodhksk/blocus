@@ -35,6 +35,15 @@ class RegionsController < ApplicationController
     @region.destroy
     redirect_to regions_path
   end
+
+  def replypost
+    @comment=Comment.new
+    @comment.content=params[:reply]
+    @comment.info_id=params[:info_id]
+    @comment.save
+    @info=Info.find(params[:info_id])
+  end
+
   private
   def region_params
     params.require(:region).permit(:name)

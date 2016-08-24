@@ -1,0 +1,15 @@
+<!-- 내용 -->
+<%= info_id %> </br>
+<%= Info.find(info_id).content %>
+
+<!-- 댓글 -->
+<div id="post_list">
+  <% Info.find(info_id).comments.each do |r| %>
+    <%= r.content %>
+    </br>
+  <% end %>
+</div>
+<%= form_tag regions_replypost_path(info_id: info_id), method: "POST", remote: true do %>
+  <input type="text" class="form-control" name="reply" id="reply" placeholder="댓글을 입력하세요.">
+  <%= submit_tag("답글달기", class: "btn btn-default") %>
+<% end %>
