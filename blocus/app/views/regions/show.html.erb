@@ -35,6 +35,9 @@
           var ne = rectangle.getBounds().getNorthEast();
           var nw = new google.maps.LatLng(ne.lat()+0.000135,ne.lng()-0.00017);
           infowindow.setContent('<%= escape_javascript(render partial: 'infowindows', locals: { :blok => @blok }) %>');
+          <%#var html = [];%>
+          <%#html.push('<input type="hidden" name="blok[lat]" value='+ne.lat()+'>');%>
+          <%#document.getElementById('new_blok').innerHTML = html.join('');%>
           infowindow.setPosition(nw);
           infowindow.open(map);
         });

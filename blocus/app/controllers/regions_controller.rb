@@ -15,6 +15,8 @@ class RegionsController < ApplicationController
 
   def show
     @blok = Blok.new
+    @lat = 0
+    @lng = 0
     @region = Region.find(params[:id])
   end
 

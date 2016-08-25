@@ -4,7 +4,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
 
       ## customized
       t.string :name
-      t.integer :brick, default: 100
+      t.integer :point, default: 100
+      t.integer :cash, default: 0
 
       ## Database authenticatable
       t.string :email,              null: false, default: ""
