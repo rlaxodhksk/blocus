@@ -1,52 +1,164 @@
-<div id="map" style="width:1200px; height:500px"></div>
+<div class="row">
+  <div class="col-md-8" id="map" style=height:550px;"></div>
+  <div class="col-md-4" id="sns"></div>
+</div>
+
 
 <%= link_to "만들기", new_blok_path %>
-
-
 <script>
-    function initMap() {
-      // Create a map object and specify the DOM element for display.
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 37.551700, lng: 126.919274},
-        scrollwheel: false,
-        zoom: 18
-      });
-      map.addListener('mousemove', function(e) {
-        var infowindow = new google.maps.InfoWindow();
-        var rectangle = new google.maps.Rectangle({
-          strokeColor: '#eeeeee',
-          strokeOpacity: 0.8,
-          strokeWeight: 1,
-          fillColor: 'black',
-          fillOpacity: 0.5,
-          map: map,
-          bounds: {
-            north: Math.floor(e.latLng.lat()/0.00027)*0.00027,
-            south: Math.floor(e.latLng.lat()/0.00027+1)*0.00027,
-            east: Math.floor(e.latLng.lng()/0.00034+1)*0.00034,
-            west: Math.floor(e.latLng.lng()/0.00034)*0.00034
-        }});
-        this.addListener('mousemove', function() {
-          rectangle.setMap();
-          infowindow.close();
-        });
-        rectangle.addListener('click', function() {
-          rectangle.setOptions({ fillColor: 'red'});
-          var ne = rectangle.getBounds().getNorthEast();
-          var nw = new google.maps.LatLng(ne.lat()+0.000135,ne.lng()-0.00017);
-          infowindow.setContent('<%= escape_javascript(render partial: 'infowindows', locals: { :blok => @blok }) %>');
-          <%#var html = [];%>
-          <%#html.push('<input type="hidden" name="blok[lat]" value='+ne.lat()+'>');%>
-          <%#document.getElementById('new_blok').innerHTML = html.join('');%>
-          infowindow.setPosition(nw);
-          infowindow.open(map);
-        });
-
-      });
+  var current
+  function initMap() {
+  // Create a map object and specify the DOM element for display.
+  var map = new google.maps.Map(document.getElementById('map'), {
+  center: {lat: 37.551700, lng: 126.919274},
+  scrollwheel: false,
+  zoom: 15
+  });
+//// Zoom change ////
+  google.maps.event.addListener(map, 'zoom_changed', function() {
+  <% Blok.all.each do |b| %>
+    var flag = 1
+    rectangle['<%=b.id%>'].setMap();
+    if(map.getZoom() <=13) {
+    <% if Info.find(b.id).popularity <= 30 %>
+      flag = 0
+    <% end %>
     }
-  </script>
-  <script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap&libraries=geometry'
-    async defer></script>
+    if(map.getZoom() ==14) {
+    <% if Info.find(b.id).popularity <= 20 %>
+      flag = 0
+    <% end %>
+    }
+    if(map.getZoom() ==15) {
+    <% if Info.find(b.id).popularity <= 10 %>
+      flag = 0
+    <% end %>
+    }
+    if(map.getZoom() >=16) {
+    <% if Info.find(b.id).popularity <= 5 %>
+      flag = 0
+    <% end %>
+    }
+
+    if(flag) {
+    rectangle['<%=b.id%>'] = new google.maps.Rectangle({
+    strokeColor: 'green',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: 'green',
+    fillOpacity: 0.5,
+    map: map,
+    bounds: {
+    north: Math.floor('<%=b.lat%>'/0.00027)*0.00027,
+    south: Math.floor('<%=b.lat%>'/0.00027+1)*0.00027,
+    east: Math.floor('<%=b.lng%>'/0.00034+1)*0.00034,
+    west: Math.floor('<%=b.lng%>'/0.00034)*0.00034
+    }});
+    rectangle['<%=b.id%>'].addListener('click', function() {
+
+
+    <% Blok.all.each do |c| %>
+      rectangle['<%=c.id%>'].setOptions({fillColor: 'green'});
+    <% end %>
+
+    rectangle['<%=b.id%>'].setOptions({fillColor: 'blue'});
+
+
+    $('#sns').html("<%= escape_javascript(render partial: 'sns', locals: { info_id: b.id  })%>");
+    })
+    }
+  <% end %>
+
+  });
+  ///////zoom 되기 전///////////////
+  var rectangle = []
+  <% Blok.all.each do |b| %>
+    rectangle['<%=b.id%>'] = new google.maps.Rectangle({
+    strokeColor: 'green',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: 'green',
+    fillOpacity: 0.5,
+    map: map,
+    bounds: {
+    north: Math.floor('<%=b.lat%>'/0.00027)*0.00027,
+    south: Math.floor('<%=b.lat%>'/0.00027+1)*0.00027,
+    east: Math.floor('<%=b.lng%>'/0.00034+1)*0.00034,
+    west: Math.floor('<%=b.lng%>'/0.00034)*0.00034
+    }});
+
+
+    rectangle['<%=b.id%>'].addListener('click', function() {
+       <% Blok.all.each do |c| %>
+         rectangle['<%=c.id%>'].setOptions({fillColor: 'green'});
+       <% end %>
+       rectangle['<%=b.id%>'].setOptions({fillColor: 'blue'});
+       current = '<%=b.id%>'
+
+       $('#sns').html("<%= escape_javascript(render partial: 'sns', locals: { info_id: b.id  })%>");
+     })
+
+   <% end %>
+
+
+
+
+ $(document).keydown(function(e){
+   if (e.keyCode == 38) {
+   <% @current%> = current
+   <% @min = 2147483647 %>
+   <% @lat = Blok.find(@current).lat %>
+   <% @lng = Blok.find(b.id).lng %>
+   <% Blok.all.each do |c| %>
+     rectangle['<%=c.id%>'].setOptions({fillColor: 'green'});
+     <% @la = Blok.find(c.id).lat%>
+     <% @ln = Blok.find(c.id).lng%>
+     <% if @la - @lat >0 && (@ln - @lng)*(@ln - @lng)+(@la - @lat)*(@la - @lat) < @min %>
+       <% @min_id = c.id %>
+       <% @min = (@ln - @lng)*(@ln - @lng)+(@la - @lat)*(@la - @lat) %>
+     <% end %>
+   <% end %>
+   rectangle['<%= @min_id %>'].setOptions({fillColor: 'blue'});
+   $('#sns').html("<%= escape_javascript(render partial: 'sns', locals: { info_id: @min_id  })%>");
+   }
+   });
+
+
+
+  map.addListener('mousemove', function(e) {
+
+  var infowindow = new google.maps.InfoWindow();
+  var rectangle = new google.maps.Rectangle({
+  strokeColor: '#eeeeee',
+  strokeOpacity: 0.8,
+  strokeWeight: 1,
+  fillColor: 'black',
+  fillOpacity: 0.5,
+  map: map,
+  bounds: {
+  north: Math.floor(e.latLng.lat()/0.00027)*0.00027,
+  south: Math.floor(e.latLng.lat()/0.00027+1)*0.00027,
+  east: Math.floor(e.latLng.lng()/0.00034+1)*0.00034,
+  west: Math.floor(e.latLng.lng()/0.00034)*0.00034
+  }});
+  this.addListener('mousemove', function() {
+  rectangle.setMap();
+  infowindow.close();
+  });
+  rectangle.addListener('click', function() {
+  rectangle.setOptions({ fillColor: 'red'});
+  var ne = rectangle.getBounds().getNorthEast();
+  var nw = new google.maps.LatLng(ne.lat()+0.000135,ne.lng()-0.00017);
+  infowindow.setContent('<%= escape_javascript(render partial: "infowindows", locals: { lat: '+ ne.lat() +', lng: '+ ne.lng()+' }) %>');
+  infowindow.setPosition(nw);
+  infowindow.open(map);
+  });
+
+  });
+  }
+</script>
+<script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap&libraries=geometry'
+  async defer></script>
 
 
 

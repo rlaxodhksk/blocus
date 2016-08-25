@@ -30,10 +30,89 @@ Region.create name: '건대'
 
 
 
+Blok.create lat: 37.551700, lng: 126.919274
+Blok.create lat: 37.552700, lng: 126.919274
+Blok.create lat: 37.553700, lng: 126.919274
+Blok.create lat: 37.554700, lng: 126.919274
+Blok.create lat: 37.555700, lng: 126.919274
+Blok.create lat: 37.556700, lng: 126.919274
+Blok.create lat: 37.557700, lng: 126.919274
+Blok.create lat: 37.558700, lng: 126.919274
+
+
+Blok.create lat: 37.551700, lng: 126.920274
+Blok.create lat: 37.552700, lng: 126.920274
+Blok.create lat: 37.553700, lng: 126.920274
+Blok.create lat: 37.554700, lng: 126.920274
+Blok.create lat: 37.555700, lng: 126.920274
+Blok.create lat: 37.556700, lng: 126.920274
+Blok.create lat: 37.557700, lng: 126.920274
+Blok.create lat: 37.558700, lng: 126.920274
+
+
+Blok.create lat: 37.551700, lng: 126.921274
+Blok.create lat: 37.552700, lng: 126.921274
+Blok.create lat: 37.553700, lng: 126.921274
+Blok.create lat: 37.554700, lng: 126.921274
+Blok.create lat: 37.555700, lng: 126.921274
+Blok.create lat: 37.556700, lng: 126.921274
+Blok.create lat: 37.557700, lng: 126.921274
+Blok.create lat: 37.558700, lng: 126.921274
+
+
+Blok.create lat: 37.551700, lng: 126.922274
+Blok.create lat: 37.552700, lng: 126.922274
+Blok.create lat: 37.553700, lng: 126.922274
+Blok.create lat: 37.554700, lng: 126.922274
+Blok.create lat: 37.555700, lng: 126.922274
+Blok.create lat: 37.556700, lng: 126.922274
+Blok.create lat: 37.557700, lng: 126.922274
+Blok.create lat: 37.558700, lng: 126.922274
 
 
 
 
+
+
+
+
+Info.create blok_id: 1, popularity: 40, content: "1번째 글입니다. "
+Info.create blok_id: 2, popularity: 5,  content: "2번째 글입니다."
+Info.create blok_id: 3, popularity: 10, content: "3번째 글입니다. "
+Info.create blok_id: 4, popularity: 30, content: "4번째 글입니다. "
+Info.create blok_id: 5, popularity: 20, content: "5번째 글입니다."
+Info.create blok_id: 6, popularity: 10, content: "6번째 글입니다."
+Info.create blok_id: 7, popularity: 10, content: "7번째 글입니다. asdklfjasdlkf"
+Info.create blok_id: 8, popularity: 40, content: "8번째 글."
+
+
+
+Info.create blok_id: 1, popularity: 40, content: "1번째 글입니다. "
+Info.create blok_id: 2, popularity: 5,  content: "2번째 글입니다."
+Info.create blok_id: 3, popularity: 10, content: "3번째 글입니다. "
+Info.create blok_id: 4, popularity: 30, content: "4번째 글입니다. "
+Info.create blok_id: 5, popularity: 20, content: "5번째 글입니다."
+Info.create blok_id: 6, popularity: 10, content: "6번째 글입니다."
+Info.create blok_id: 7, popularity: 10, content: "7번째 글입니다. asdklfjasdlkf"
+Info.create blok_id: 8, popularity: 40, content: "8번째 글."
+
+Info.create blok_id: 1, popularity: 40, content: "1번째 글입니다. "
+Info.create blok_id: 2, popularity: 5,  content: "2번째 글입니다."
+Info.create blok_id: 3, popularity: 10, content: "3번째 글입니다. "
+Info.create blok_id: 4, popularity: 30, content: "4번째 글입니다. "
+Info.create blok_id: 5, popularity: 20, content: "5번째 글입니다."
+Info.create blok_id: 6, popularity: 10, content: "6번째 글입니다."
+Info.create blok_id: 7, popularity: 10, content: "7번째 글입니다. asdklfjasdlkf"
+Info.create blok_id: 8, popularity: 40, content: "8번째 글."
+
+Info.create blok_id: 1, popularity: 40, content: "1번째 글입니다. "
+Info.create blok_id: 2, popularity: 5,  content: "2번째 글입니다."
+Info.create blok_id: 3, popularity: 10, content: "3번째 글입니다. "
+Info.create blok_id: 4, popularity: 30, content: "4번째 글입니다. "
+Info.create blok_id: 5, popularity: 20, content: "5번째 글입니다."
+Info.create blok_id: 6, popularity: 10, content: "6번째 글입니다."
+Info.create blok_id: 7, popularity: 10, content: "7번째 글입니다. asdklfjasdlkf"
+Info.create blok_id: 8, popularity: 40, content: "8번째 글."
 
 
 
