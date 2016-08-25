@@ -7,13 +7,115 @@
 <%= link_to "만들기", new_blok_path %>
 <script>
   var current
+  var map
+  var current_marker
+  var current_pos
+  var current_op
+  function CenterControl(controlDiv, map) {
+
+    // Set CSS for the control border.
+    var controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#fff';
+    controlUI.style.border = '2px solid #fff';
+    controlUI.style.borderRadius = '3px';
+    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.marginBottom = '22px';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'GPS'
+    controlDiv.appendChild(controlUI);
+
+    // Set CSS for the control interior.
+    var controlText = document.createElement('div');
+    controlText.style.color = 'rgb(25,25,25)';
+    controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+    controlText.style.fontSize = '16px';
+    controlText.style.lineHeight = '38px';
+    controlText.style.paddingLeft = '5px';
+    controlText.style.paddingRight = '5px';
+    controlText.innerHTML = '현재위치';
+    controlUI.appendChild(controlText);
+
+    // 누르면 현재위치 표시 및 마크 생성
+    controlUI.addEventListener('click', function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          current_pos = pos;
+
+          current_marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+          });
+          current_op = 1;
+
+          map.setCenter(pos);
+          }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+
+        });
+        } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    });
+
+  }
+
+  // 키 누르면 마크 이동
+  document.onkeydown = checkKey;
+
+  function checkKey(e) {
+    // 현재 위치 표시 될때만 이동됨
+    if (current_op == 1){
+
+      e = e || window.event;
+
+      step = 0.005;
+
+      if (e.keyCode == '38') {
+        current_pos["lat"] = current_pos["lat"] + step;
+        current_marker.setPosition(current_pos);
+        map.setCenter(current_pos);
+        // up arrow
+      }
+      else if (e.keyCode == '40') {
+        current_pos["lat"] = current_pos["lat"] - step;
+        current_marker.setPosition(current_pos);
+        map.setCenter(current_pos);
+        // down arrow
+      }
+      else if (e.keyCode == '37') {
+        current_pos["lng"] = current_pos["lng"] - step;
+        current_marker.setPosition(current_pos);
+        map.setCenter(current_pos);
+        // left arrow
+      }
+      else if (e.keyCode == '39') {
+        current_pos["lng"] = current_pos["lng"] + step;
+        current_marker.setPosition(current_pos);
+        map.setCenter(current_pos);
+        // right arrow
+      }
+    }
+  }
+
   function initMap() {
     // Create a map object and specify the DOM element for display.
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 37.551700, lng: 126.919274},
       scrollwheel: false,
       zoom: 15
     });
+      var centerControlDiv = document.createElement('div');
+      var centerControl = new CenterControl(centerControlDiv, map);
+
+      centerControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
     //// Zoom change ////
       
     google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -137,7 +239,8 @@
       });
 
     });
-  }
+
+}
 </script>
 <script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap&libraries=geometry'
   async defer></script>
