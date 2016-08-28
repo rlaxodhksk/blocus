@@ -1,6 +1,6 @@
 class InfosController < ApplicationController
   def index
-    @infos=Blok.all
+    @infos=Info.all
   end
 
   def new

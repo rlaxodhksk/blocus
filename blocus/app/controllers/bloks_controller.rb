@@ -20,7 +20,8 @@ class BloksController < ApplicationController
   def create
     @blok = Blok.new(blok_params)
     @blok.user = current_user
-
+    @info = Info.new
+    @info.save
     respond_to do |format|
       if @blok.save
         flash[:notice] = 'Blok was successfully created.'

@@ -1,6 +1,13 @@
 <!-- 내용 -->
 <%= info_id %> </br>
-<%= Info.find(info_id).content %>
+<div id='content'><%= Info.find(info_id).content %> </div>
+<% if Info.find(info_id).content == "" %>
+  <p> 글이 아직 없습니다 <p>
+  <%= form_for Info.find(info_id), remote: true do |f| %>
+    <%= f.text_field :content %>
+  <% end %>
+<% end %>
+
 
 <!-- 댓글 -->
 <div id="post_list">
@@ -13,3 +20,5 @@
   <input type="text" class="form-control" name="reply" id="reply" placeholder="댓글을 입력하세요.">
   <%= submit_tag("답글달기", class: "btn btn-default") %>
 <% end %>
+
+
