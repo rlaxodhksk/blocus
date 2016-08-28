@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/regions/:region_id/index' => "regions#index"
   get '/mypage' => "home#mypage"
 
+  post 'regions/myajax' => "regions#myajax"
 
   post '/regions/replypost'
 

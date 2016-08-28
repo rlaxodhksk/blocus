@@ -1,10 +1,12 @@
 <div class="row">
-  <div class="col-md-8" id="map" style=height:550px;"></div>
+  <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+  <div id="map" class="col-md-8" style="height:550px"></div>
   <div class="col-md-4" id="sns"></div>
 </div>
 
 
 <%= link_to "만들기", new_blok_path %>
+<%= $a %>
 <script>
   var current
   var map
@@ -20,8 +22,8 @@
     controlUI.style.borderRadius = '3px';
     controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
     controlUI.style.cursor = 'pointer';
-    controlUI.style.marginBottom = '22px';
-    controlUI.style.textAlign = 'center';
+    controlUI.style.marginTop = '12px';
+    controlUI.style.marginLeft = '630px';
     controlUI.title = 'GPS'
     controlDiv.appendChild(controlUI);
 
@@ -111,13 +113,70 @@
       scrollwheel: false,
       zoom: 15
     });
+    var input = document.getElementById('pac-input');
+    input.style.marginTop='12px'
+      var searchBox = new google.maps.places.SearchBox(input);
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+      // Bias the SearchBox results towards current map's viewport.
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      var markers = [];
+      // [START region_getplaces]
+      // Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          // Create a marker for each place.
+          markers.push(new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location
+          }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+       // map.fitBounds(bounds);
+         map.setCenter(bounds.getCenter())
+         map.setZoom(17)
+      });
+///////////////////////
       var centerControlDiv = document.createElement('div');
       var centerControl = new CenterControl(centerControlDiv, map);
 
       centerControlDiv.index = 1;
       map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
     //// Zoom change ////
-      
     google.maps.event.addListener(map, 'zoom_changed', function() {
       <% Blok.all.each do |b| %>
         <% unless Info.where(blok_id: b.id).take==nil  %>
@@ -160,12 +219,20 @@
             }});
             rectangle['<%=b.id%>'].addListener('click', function() {
 
+              current_rectangle = new google.maps.Rectangle({
+              strokeColor: 'blue',
+              strokeOpacity: 0.8,
+              strokeWeight: 1,
+              fillColor: 'green',
+              fillOpacity: 0.5,
+              map: map,
+              bounds: {
+              north: Math.floor('<%=b.lat%>'/0.00027)*0.00027,
+              south: Math.floor('<%=b.lat%>'/0.00027+1)*0.00027,
+              east: Math.floor('<%=b.lng%>'/0.00034+1)*0.00034,
+              west: Math.floor('<%=b.lng%>'/0.00034)*0.00034
+              }});
 
-              <% Blok.all.each do |c| %>
-                rectangle['<%=c.id%>'].setOptions({fillColor: 'green'});
-              <% end %>
-
-              rectangle['<%=b.id%>'].setOptions({fillColor: 'blue'});
 
 
               $('#sns').html("<%= escape_javascript(render partial: 'sns', locals: { info_id: b.id  })%>");
@@ -176,9 +243,72 @@
 
     });
     ///////zoom 되기 전///////////////
-    var rectangle = []
+    document.onkeydown = checkKey;
+
+    function checkKey(e) {
+    // 현재 위치 표시 될때만 이동됨
+    if (current_op == 2){
+
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+    $.ajax({
+    type: "GET",
+    url: '/',
+    data: { a: 32},
+    success : function(data) {
+    alert('<%= $a %>')
+    },
+    error : function(xhr, status, error) {
+    alert("에러발생");
+    }
+    })
+       current_rectangle.setOptions({fillColor: 'green'});
+       var next = Number(current_rectangle['id'].toString())+1
+       current_rectangle = rectangle[next];
+       current_rectangle.setOptions({fillColor: 'blue'});
+       map.setCenter(current_rectangle.getBounds().getNorthEast());
+    // up arrow
+      }
+      else if (e.keyCode == '40') {
+        current_pos["lat"] = current_pos["lat"] - step;
+        current_marker.setPosition(current_pos);
+        map.setCenter(current_pos);
+        // down arrow
+      }
+      else if (e.keyCode == '37') {
+        current_pos["lng"] = current_pos["lng"] - step;
+        current_marker.setPosition(current_pos);
+        map.setCenter(current_pos);
+        // left arrow
+      }
+      else if (e.keyCode == '39') {
+        current_pos["lng"] = current_pos["lng"] + step;
+        current_marker.setPosition(current_pos);
+        map.setCenter(current_pos);
+        // right arrow
+      }
+    }
+  }
+
+
+    var current_rectangle = new google.maps.Rectangle({
+        strokeColor: 'green',
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: 'green',
+        fillOpacity: 0.5,
+        map: map,
+        bounds: {
+          north: 0,
+          south: 0,
+          east: 0,
+          west: 0
+      }});
+   var rectangle = []
     <% Blok.all.each do |b| %>
       rectangle['<%=b.id%>'] = new google.maps.Rectangle({
+        id: '<%=b.id%>',
         strokeColor: 'green',
         strokeOpacity: 0.8,
         strokeWeight: 1,
@@ -194,11 +324,11 @@
 
 
       rectangle['<%=b.id%>'].addListener('click', function() {
-        <% Blok.all.each do |c| %>
-          rectangle['<%=c.id%>'].setOptions({fillColor: 'green'});
-        <% end %>
-        rectangle['<%=b.id%>'].setOptions({fillColor: 'blue'});
-        current = '<%=b.id%>'
+      current_op=2
+      current_rectangle.setOptions({fillColor: 'green'});
+      current_rectangle = rectangle['<%=b.id%>']
+      current_rectangle.setOptions({fillColor: 'blue'});
+
         <% if Info.where(id:b.id).take != nil %>
         $('#sns').html("<%= escape_javascript(render partial: 'sns', locals: { info_id: b.id  })%>");
         <% end %>
@@ -239,12 +369,10 @@
       });
 
     });
-
 }
 </script>
-<script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap&libraries=geometry'
+<script src='https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_KEY'] %>&callback=initMap&libraries=geometry,places'
   async defer></script>
-
 
 
 

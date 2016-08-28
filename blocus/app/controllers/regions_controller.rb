@@ -1,6 +1,7 @@
 class RegionsController < ApplicationController
   skip_before_action :authenticate_user!
   def index
+    $a = -1
     @regions=Region.all
   end
 
@@ -11,6 +12,10 @@ class RegionsController < ApplicationController
   def create
     @region = Region.create(region_params)
     redirect_to regions_path
+  end
+  def myajax
+    @info=Info.find(params[:a])
+    @info.content = "시발"
   end
 
   def show
