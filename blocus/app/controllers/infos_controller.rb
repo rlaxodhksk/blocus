@@ -14,6 +14,7 @@ class InfosController < ApplicationController
 
   def show
     @info = Info.find(params[:id])
+    redirect_to :back
   end
 
   def edit

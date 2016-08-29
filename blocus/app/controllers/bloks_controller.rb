@@ -1,5 +1,8 @@
 class BloksController < ApplicationController
   def index
+    Blok.all.each do |b|
+      b.next_id = 7
+    end
     @blok = Blok.all
 
     respond_to do |format|
@@ -10,11 +13,11 @@ class BloksController < ApplicationController
 
   def new
     @blok = Blok.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render xml: @blok }
     end
+    @blok.next_id = 55
   end
 
   def create
@@ -22,6 +25,7 @@ class BloksController < ApplicationController
     @blok.user = current_user
     @info = Info.new
     @info.save
+    @blok.user_id = current_user.id
     respond_to do |format|
       if @blok.save
         flash[:notice] = 'Blok was successfully created.'
@@ -41,6 +45,7 @@ class BloksController < ApplicationController
       format.html # show.html.erb
       format.xml  { render xml: @blok }
     end
+    redirect_to :back
   end
 
   def edit

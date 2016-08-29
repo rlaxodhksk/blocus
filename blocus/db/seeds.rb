@@ -16,9 +16,9 @@ User.create email: 'admin4@a', password: "123456"
 
 
 
-Region.create name: '홍대'
-Region.create name: '강남'
-Region.create name: '이태원'
+Region.create name: '홍대', lat: 37.551700, lng: 126.919274
+Region.create name: '강남', lat: 37.501313, lng: 127.025904
+Region.create name: '관악'
 Region.create name: '명동'
 Region.create name: '인사동'
 Region.create name: '관악'
@@ -30,44 +30,44 @@ Region.create name: '건대'
 
 
 
-Blok.create lat: 37.551700, lng: 126.919274
-Blok.create lat: 37.552700, lng: 126.919274
-Blok.create lat: 37.553700, lng: 126.919274
-Blok.create lat: 37.554700, lng: 126.919274
-Blok.create lat: 37.555700, lng: 126.919274
-Blok.create lat: 37.556700, lng: 126.919274
-Blok.create lat: 37.557700, lng: 126.919274
-Blok.create lat: 37.558700, lng: 126.919274
+Blok.create lat: 37.551700, lng: 126.919274, user_id: 1
+Blok.create lat: 37.552700, lng: 126.919274, user_id: 1
+Blok.create lat: 37.553700, lng: 126.919274, user_id: 1
+Blok.create lat: 37.554700, lng: 126.919274, user_id: 1
+Blok.create lat: 37.555700, lng: 126.919274, user_id: 1
+Blok.create lat: 37.556700, lng: 126.919274, user_id: 1
+Blok.create lat: 37.557700, lng: 126.919274, user_id: 1
+Blok.create lat: 37.558700, lng: 126.919274, user_id: 1
 
 
-Blok.create lat: 37.551700, lng: 126.920274
-Blok.create lat: 37.552700, lng: 126.920274
-Blok.create lat: 37.553700, lng: 126.920274
-Blok.create lat: 37.554700, lng: 126.920274
-Blok.create lat: 37.555700, lng: 126.920274
-Blok.create lat: 37.556700, lng: 126.920274
-Blok.create lat: 37.557700, lng: 126.920274
-Blok.create lat: 37.558700, lng: 126.920274
+Blok.create lat: 37.551700, lng: 126.920274, user_id: 2
+Blok.create lat: 37.552700, lng: 126.920274, user_id: 2
+Blok.create lat: 37.553700, lng: 126.920274, user_id: 2
+Blok.create lat: 37.554700, lng: 126.920274, user_id: 2
+Blok.create lat: 37.555700, lng: 126.920274, user_id: 2
+Blok.create lat: 37.556700, lng: 126.920274, user_id: 2
+Blok.create lat: 37.557700, lng: 126.920274, user_id: 2
+Blok.create lat: 37.558700, lng: 126.920274, user_id: 2
 
 
-Blok.create lat: 37.551700, lng: 126.921274
-Blok.create lat: 37.552700, lng: 126.921274
-Blok.create lat: 37.553700, lng: 126.921274
-Blok.create lat: 37.554700, lng: 126.921274
-Blok.create lat: 37.555700, lng: 126.921274
-Blok.create lat: 37.556700, lng: 126.921274
-Blok.create lat: 37.557700, lng: 126.921274
-Blok.create lat: 37.558700, lng: 126.921274
+Blok.create lat: 37.551700, lng: 126.921274, user_id: 1
+Blok.create lat: 37.552700, lng: 126.921274, user_id: 1
+Blok.create lat: 37.553700, lng: 126.921274, user_id: 1
+Blok.create lat: 37.554700, lng: 126.921274, user_id: 1
+Blok.create lat: 37.555700, lng: 126.921274, user_id: 1
+Blok.create lat: 37.556700, lng: 126.921274, user_id: 1
+Blok.create lat: 37.557700, lng: 126.921274, user_id: 1
+Blok.create lat: 37.558700, lng: 126.921274, user_id: 1
 
 
-Blok.create lat: 37.551700, lng: 126.922274
-Blok.create lat: 37.552700, lng: 126.922274
-Blok.create lat: 37.553700, lng: 126.922274
-Blok.create lat: 37.554700, lng: 126.922274
-Blok.create lat: 37.555700, lng: 126.922274
-Blok.create lat: 37.556700, lng: 126.922274
-Blok.create lat: 37.557700, lng: 126.922274
-Blok.create lat: 37.558700, lng: 126.922274
+Blok.create lat: 37.551700, lng: 126.922274, user_id: 1
+Blok.create lat: 37.552700, lng: 126.922274, user_id: 1
+Blok.create lat: 37.553700, lng: 126.922274, user_id: 1
+Blok.create lat: 37.554700, lng: 126.922274, user_id: 1
+Blok.create lat: 37.555700, lng: 126.922274, user_id: 1
+Blok.create lat: 37.556700, lng: 126.922274, user_id: 1
+Blok.create lat: 37.557700, lng: 126.922274, user_id: 1
+Blok.create lat: 37.558700, lng: 126.922274, user_id: 1
 
 
 

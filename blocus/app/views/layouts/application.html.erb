@@ -61,11 +61,15 @@
   <body>
     <nav>
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Blocus</a>
+      <a href="/" class="brand-logo">&nbsp &nbsp Blocus</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <% if user_signed_in? %>
-          <li><a href="/mypage"><%= current_user.name %></a></li>
-          <li><%=link_to "log out", destroy_user_session_path, method: "DELETE" %> </li>
+          <li><a href="/mypage"><font size='4'><%= current_user.email %></font></a></li>
+          <li>
+          <%=link_to destroy_user_session_path, method: "DELETE" do %>
+            <p><font size='4'>log out</font></p>
+          <% end %>
+          </li>
         <% else %>
           <li><%=link_to "log in", new_user_session_path %> </li>
           <li> <%=link_to "sign in", new_user_registration_path%> </li>
@@ -74,25 +78,5 @@
 </div>
 </nav>
 <main>
-
-<div class='container' style="margin-left:30px">
   <%= yield %>
-</div>
 </main>
-<footer class="page-footer">
-<div class="container">
-  <div class="row">
-    <div class="col l6 s12">
-      <h5 class="white-text">Footer Content</h5>
-      <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-    </div>
-  </div>
-</div>
-<div class="footer-copyright">
-  <div class="container">
-    © 2014 Copyright Text
-    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-  </div>
-</div>
-</footer>
-

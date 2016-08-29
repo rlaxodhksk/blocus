@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160805082409) do
     t.integer  "event_id"
     t.integer  "user_id"
     t.integer  "region_id"
+    t.integer  "next_id"
     t.float    "lat"
     t.float    "lng"
     t.integer  "flag",       default: 0
@@ -52,6 +53,8 @@ ActiveRecord::Schema.define(version: 20160805082409) do
   end
 
   create_table "regions", force: :cascade do |t|
+    t.float    "lat"
+    t.float    "lng"
     t.integer  "region_id"
     t.string   "name",       default: "nowhere"
     t.datetime "created_at",                     null: false
